@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio — Dev</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<nav id="navbar">
+  <a href="#" class="nav-logo">dev<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">Sobre mí</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Proyectos</a></li>
+    <li><a href="#contact">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <p class="hero-tag">Desarrollador Web & Software</p>
+  <h1 class="hero-title">
+    <span class="line">Hola, soy</span>
+    <span class="line accent" id="hero-name">Tu Nombre</span>
+  </h1>
+  <p class="hero-subtitle">Diseño y construyo experiencias digitales rápidas, accesibles y con intención. Cada línea de código tiene un propósito.</p>
+  <div class="hero-cta">
+    <a href="#projects" class="btn btn-primary">Ver proyectos</a>
+    <a href="#contact"  class="btn btn-outline">Contáctame</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p class="section-label">Sobre mí</p>
+      <h2 class="section-title">Construyo cosas para la web</h2>
+      <p>Soy un desarrollador apasionado por crear soluciones <span class="highlight">limpias, eficientes y escalables</span>. Me enfoco en escribir código de calidad y en aprender constantemente nuevas tecnologías.</p>
+      <p>Cuando no estoy programando, estoy explorando ideas, diseñando interfaces o descubriendo las últimas tendencias del desarrollo web.</p>
+      <a href="#projects" class="btn btn-outline" style="margin-top:1.5rem; display:inline-flex;">Ver mi trabajo</a>
+    </div>
+    <div class="about-stats reveal reveal-delay-2">
+      <div class="stat-card">
+        <div class="stat-num" id="stat-projects">0</div>
+        <div class="stat-label">Proyectos completados</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-exp">0</div>
+        <div class="stat-label">Años de experiencia</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-skills">0</div>
+        <div class="stat-label">Tecnologías dominadas</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">∞</div>
+        <div class="stat-label">Ganas de aprender</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label reveal">Habilidades</p>
+  <h2 class="section-title reveal reveal-delay-1">Stack tecnológico</h2>
+  <div class="skills-grid" id="skills-grid"></div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-label reveal">Proyectos</p>
+  <h2 class="section-title reveal reveal-delay-1">Lo que he construido</h2>
+  <div class="projects-grid" id="projects-grid"></div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label reveal">Contacto</p>
+  <h2 class="section-title reveal reveal-delay-1">Hablemos</h2>
+  <div class="contact-inner reveal reveal-delay-2">
+    <form id="contact-form" onsubmit="handleContact(event)">
+      <input type="text"  placeholder="Tu nombre" required/>
+      <input type="email" placeholder="Tu email"  required/>
+      <textarea placeholder="Tu mensaje..."></textarea>
+      <button type="submit">Enviar mensaje</button>
+    </form>
+  </div>
+  <div class="socials reveal reveal-delay-3" id="socials-wrap"></div>
+</section>
+
+<footer>
+  <span id="footer-name">dev.</span>
+  <p>Hecho con pasión &mdash; <span>©</span> <span id="year"></span></p>
+</footer>
+
+<script src="main.js"></script>
+</body>
+</html>

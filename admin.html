@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="admin.css"/>
+</head>
+<body>
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <a href="index.html" class="sidebar-logo">dev<span>.</span> <span style="color:var(--gray);font-size:0.7rem;font-family:'DM Sans';font-weight:400">admin</span></a>
+    <p class="sidebar-label">Panel</p>
+    <nav>
+      <button class="nav-btn active" onclick="showPanel('projects')" data-panel="projects"><span class="icon">🚀</span> Proyectos</button>
+      <button class="nav-btn"        onclick="showPanel('skills')"   data-panel="skills">  <span class="icon">⚡</span> Skills</button>
+      <button class="nav-btn"        onclick="showPanel('config')"   data-panel="config">  <span class="icon">⚙️</span> Configuración</button>
+      <button class="nav-btn"        onclick="showPanel('socials')"  data-panel="socials"> <span class="icon">🔗</span> Redes sociales</button>
+    </nav>
+    <div class="sidebar-preview">
+      <a href="index.html" class="preview-btn" target="_blank">👁 Ver portafolio</a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- PROJECTS -->
+    <div id="panel-projects" class="panel active">
+      <div class="page-header">
+        <h1>Proyectos</h1>
+        <p>Añade y gestiona los proyectos de tu portafolio</p>
+      </div>
+      <div id="project-form-wrap" style="display:none">
+        <div class="form-card">
+          <h2 id="project-form-title">Nuevo proyecto</h2>
+          <div class="form-grid">
+            <div class="form-row">
+              <div class="form-group">
+                <label>Título del proyecto</label>
+                <input id="pf-title" type="text" placeholder="Mi proyecto increíble"/>
+              </div>
+              <div class="form-group">
+                <label>Emoji representativo</label>
+                <input id="pf-emoji" type="text" placeholder="💻" maxlength="2" style="font-size:1.5rem"/>
+                <div class="emoji-pick" id="emoji-pick"></div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Descripción corta</label>
+              <textarea id="pf-desc" placeholder="Qué hace este proyecto y qué problema resuelve..." style="min-height:80px"></textarea>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>URL Live Demo (opcional)</label>
+                <input id="pf-live" type="url" placeholder="https://miproyecto.com"/>
+              </div>
+              <div class="form-group">
+                <label>URL Repositorio (opcional)</label>
+                <input id="pf-repo" type="url" placeholder="https://github.com/..."/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Tecnologías / Tags (Enter para añadir)</label>
+              <div class="tags-input" id="tags-wrap">
+                <input id="pf-tag-input" type="text" placeholder="React, Node.js..." style="border:none;background:transparent"/>
+              </div>
+            </div>
+            <div class="btn-row">
+              <button class="btn-save"   onclick="saveProject()">Guardar proyecto</button>
+              <button class="btn-cancel" onclick="hideProjectForm()">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem">
+        <p style="color:var(--gray);font-size:0.85rem" id="project-count"></p>
+        <button class="btn-add" onclick="showProjectForm()">+ Añadir proyecto</button>
+      </div>
+      <div class="project-list" id="project-list"></div>
+    </div>
+
+    <!-- SKILLS -->
+    <div id="panel-skills" class="panel">
+      <div class="page-header">
+        <h1>Habilidades</h1>
+        <p>Edita tus skills y ajusta el nivel de cada una</p>
+      </div>
+      <div class="form-card">
+        <h2>Añadir nueva skill</h2>
+        <div class="form-grid">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nombre</label>
+              <input id="sk-name" type="text" placeholder="JavaScript"/>
+            </div>
+            <div class="form-group">
+              <label>Icono (emoji)</label>
+              <input id="sk-icon" type="text" placeholder="⚡" maxlength="2"/>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Descripción corta</label>
+            <input id="sk-desc" type="text" placeholder="ES6+, DOM, async/await"/>
+          </div>
+          <div class="form-group">
+            <label>Nivel: <span id="sk-level-val">70</span>%</label>
+            <input type="range" id="sk-level" min="10" max="100" value="70"
+              oninput="document.getElementById('sk-level-val').textContent=this.value"/>
+          </div>
+          <div class="btn-row">
+            <button class="btn-save" onclick="addSkill()">Añadir skill</button>
+          </div>
+        </div>
+      </div>
+      <h2 style="font-family:'Syne',sans-serif;font-size:1.1rem;margin-bottom:1rem">Skills actuales</h2>
+      <div class="skill-admin-grid" id="skill-admin-grid"></div>
+    </div>
+
+    <!-- CONFIG -->
+    <div id="panel-config" class="panel">
+      <div class="page-header">
+        <h1>Configuración</h1>
+        <p>Personaliza el contenido de tu portafolio</p>
+      </div>
+      <div class="form-card">
+        <h2>Información personal</h2>
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Tu nombre completo</label>
+            <input id="cfg-name" type="text" placeholder="Ana García"/>
+          </div>
+          <div class="form-group">
+            <label>Subtítulo del hero</label>
+            <textarea id="cfg-subtitle" style="min-height:70px" placeholder="Diseño y construyo experiencias digitales..."></textarea>
+          </div>
+          <div class="section-divider"></div>
+          <h3 style="font-size:0.95rem;font-weight:500">Sección "Sobre mí"</h3>
+          <div class="form-group">
+            <label>Párrafo 1</label>
+            <textarea id="cfg-about1" style="min-height:80px" placeholder="Cuéntanos sobre ti..."></textarea>
+          </div>
+          <div class="form-group">
+            <label>Párrafo 2</label>
+            <textarea id="cfg-about2" style="min-height:80px" placeholder="Más sobre ti..."></textarea>
+          </div>
+          <div class="section-divider"></div>
+          <h3 style="font-size:0.95rem;font-weight:500">Estadísticas</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Proyectos completados</label>
+              <input id="cfg-stat-projects" type="number" placeholder="5"/>
+            </div>
+            <div class="form-group">
+              <label>Años de experiencia</label>
+              <input id="cfg-stat-exp" type="number" placeholder="2"/>
+            </div>
+            <div class="form-group">
+              <label>Tecnologías dominadas</label>
+              <input id="cfg-stat-skills" type="number" placeholder="8"/>
+            </div>
+          </div>
+          <div class="btn-row">
+            <button class="btn-save" onclick="saveConfig()">Guardar configuración</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SOCIALS -->
+    <div id="panel-socials" class="panel">
+      <div class="page-header">
+        <h1>Redes sociales</h1>
+        <p>Configura tus enlaces de contacto y redes</p>
+      </div>
+      <div class="form-card">
+        <h2>Añadir enlace</h2>
+        <div class="form-grid">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Nombre</label>
+              <input id="soc-name" type="text" placeholder="GitHub"/>
+            </div>
+            <div class="form-group">
+              <label>Icono</label>
+              <select id="soc-icon">
+                <option value="github">GitHub</option>
+                <option value="linkedin">LinkedIn</option>
+                <option value="mail">Email</option>
+                <option value="twitter">Twitter / X</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>URL</label>
+            <input id="soc-url" type="url" placeholder="https://github.com/tuusuario"/>
+          </div>
+          <div class="btn-row">
+            <button class="btn-save" onclick="addSocial()">Añadir red</button>
+          </div>
+        </div>
+      </div>
+      <h2 style="font-family:'Syne',sans-serif;font-size:1.1rem;margin-bottom:1rem">Redes actuales</h2>
+      <div class="project-list" id="socials-list"></div>
+    </div>
+
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+<script src="admin.js"></script>
+</body>
+</html>
